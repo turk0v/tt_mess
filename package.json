@@ -1,0 +1,25 @@
+{
+  "name": "tt_mess",
+  "version": "1.0.0",
+  "description": "real-time messanger project based on mail.ru educational course term 1",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/turk0v/tt_mess.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/turk0v/tt_mess/issues"
+  },
+  "homepage": "https://github.com/turk0v/tt_mess#readme"
+}
