@@ -1,0 +1,8 @@
+Running 10s test @ http://127.0.0.1:8000/apk
+  4 threads and 5 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     3.48ms  417.05us  13.62ms   92.75%
+    Req/Sec   283.20     21.50   310.00     88.00%
+  11307 requests in 10.03s, 2.40MB read
+Requests/sec:   1127.19
+Transfer/sec:    245.47KB
