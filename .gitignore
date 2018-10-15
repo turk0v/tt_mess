@@ -1,4 +1,4 @@
-venv/
+tt_venv/
 node_modules/
 __pycache__/
 *.pyc
