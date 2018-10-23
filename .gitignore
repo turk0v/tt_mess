@@ -1,6 +1,7 @@
 tt_venv/
 node_modules/
 __pycache__/
+instance/config.py
 *.pyc
 *.swo
 *.swp
