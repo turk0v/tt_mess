@@ -1,5 +1,7 @@
 import unittest
-from app import app
+import sys
+sys.path.insert(0, '/Users/matveyturkov/tt_mess/app')
+from __init__ import app
 from flask import jsonify
 
 class ExpectedFailureTestCase(unittest.TestCase):

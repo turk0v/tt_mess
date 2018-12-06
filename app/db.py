@@ -23,7 +23,7 @@ def query_all(sql, **params):
 	with get_cursor() as cur:
 		cur.execute(sql,params)
 		result = cur.fetchall()
-		return {i:  dict(result[i]) for i in range(len(result))}
+		return list(map(dict, result))
 
 def commit():
 	if hasattr(flask.g,'dbconn'):

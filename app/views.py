@@ -1,45 +1,34 @@
 from flask import request, abort ,jsonify,render_template
-from app import app
-
-CHATS_LIST = ['tmp1','tmp2','tmp3']
-CONTACTS_LIST = ['Profile1', 'Profile2', 'Profile3']
-
-
-@app.route('/<string:name>/')
-@app.route('/')
-def index(name = "World"):
-	return render_template("home.html",name = name)
-
-
-@app.route('/form/', methods = ['POST', 'GET'])
-def form():
-	if request.method == 'GET':
-		return render_template("form.html")
-	else:
-		return_value = jsonify(request.form)
-		return return_value
-
-@app.route('/chats/', methods = ['GET'])
-def get_chats_list():
-	result = {}
-	result['status_code'] = '200 OK'
-	result['mimetype'] = 'application/json'
-	result['chats'] = CHATS_LIST
-	return jsonify(result)
-
-@app.route('/contacts/', methods = ['GET'])
-def get_contacts_list():
-	result = {}
-	result['status_code'] = '200 OK'
-	result['mimetype'] = 'application/json'
-	result['contacts'] = CONTACTS_LIST
-	return jsonify(result)
+import sys
+sys.path.insert(0, '/Users/matveyturkov/tt_mess/app')
+from __init__ import app,jsonrpc
+from fake_json_data import * 
+from model import *
+import json
+# @app.route('/')
+# def index(name = "World"):
+# 	return render_template("home.html",name = 'bio')
+# @app.after_request
+# def after_request(response):
+#   response.headers.add('Access-Control-Allow-Origin', '*')
+#   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+#   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+#   return response
 
 
-@app.route('/new_chat/', methods = ['GET', 'POST'])
-def create_new_chat():
-	if request.method == 'GET':
-		return render_template("new_chat.html")
-	else:
-		CHATS_LIST.append(request.form['chat_name'])
-		return jsonify(request.form)
+@jsonrpc.method('get_chats_request')
+def get_chats_request(user_id):
+    return jsonify('hi').json
+
+
+
+# /search_users/
+# /search_chats/
+# /list_chats/
+# /create_pers_chat/
+# /create_group_chat/
+# /add_members_to_group_chat/
+# /leave_group_chat/
+# /send_message/
+# /read_message/
+# /upload_file/

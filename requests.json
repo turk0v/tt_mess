@@ -1,0 +1,3 @@
+[
+	{ "jsonrpc": "2.0", "method": "search_user_by_nick", "params": [], "id": 1 }
+]
