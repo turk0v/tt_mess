@@ -1,7 +1,9 @@
 import datetime
 import json
 from model import get_chats
+from flask_cors import CORS
 from __init__ import app
+CORS(app)
 with app.app_context():
 	x = get_chats()
 def wsgi_application(environ, start_response):
