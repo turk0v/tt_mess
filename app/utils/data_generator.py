@@ -35,19 +35,16 @@ def rand_person(object_in,user):
 		tmp_keys.append(key)
 	return(tmp_keys)
 
-# message_id,chat_id,user_id,content,sent
 def add_messages(number_to_gen,last_message_id,chat_id,user_id) :
 	for i in range(0,number_to_gen-1):
 		message_id_gen = randint(50001,120000)
 		add_new_message(message_id_gen,chat_id,user_id,str(choice(messages)),time_formater())
 		print("added message with id {}".format(message_id_gen))
-		# print("message_id_gen={},chat_id={},user_id={},str(choice(messages))={},time_formater()={}".format(message_id_gen
-		# 														,chat_id,user_id,str(choice(messages)),time_formater()))
 	add_new_message(last_message_id,chat_id,user_id,str(choice(messages)),time_formater())
 	print("added last message with id {}".format(last_message_id))
-	# print("last_message_id={},chat_id={},user_id={},str(choice(messages))={},time_formater()={}".format(last_message_id
-	# 														,chat_id,user_id,str(choice(messages)),time_formater()))
-with app.app_context():
+
+
+# with app.app_context():
 	for user in users_nick :
 		user_id_gen = randint(100,5000)
 		chat_id1_gen = randint(5010,7500)
@@ -55,20 +52,14 @@ with app.app_context():
 		message_id1_gen = randint(10010,25000)
 		message_id2_gen = randint(25010,50000)
 		key_gen = randint(0,99)
-		# print('id= {},user={},nick={},avatar={}'.format(user_id_gen,user,users_nick[user],None) )
 		add_new_user(user_id_gen,user,users_nick[user],None)
 		print("added user with id {}".format(user_id_gen))
 		tmp = rand_person(users_nick,user)
 		adding_user = str(choice(tmp))
 		add_new_chat(chat_id1_gen,False,message_id1_gen,adding_user,0,key_gen,None,user_id_gen)
 		print("added chat with id {}".format(chat_id1_gen))
-		# print("chat_id1_gen={},False={},message_id1_gen={},adding_user={},0={},key_gen={},None={},user_id_gen={}".format(chat_id1_gen,
-																		# False,message_id1_gen,adding_user,0,key_gen,None,user_id_gen))
 		add_messages(10,message_id1_gen,chat_id1_gen,user_id_gen)
-
 		tmp = rand_person(tmp,adding_user)
-		# print("chat_id2_gen={},False={},message_id2_gen={},adding_user={},0={},key_gen={},None={},user_id_gen={}".format(chat_id2_gen,
-																	# False,message_id2_gen,str(choice(tmp)),0,key_gen,None,user_id_gen))
 		add_new_chat(chat_id2_gen,False,message_id2_gen,str(choice(tmp)),0,key_gen,None,user_id_gen)
 		print("added chat with id {}".format(chat_id2_gen))
 		add_messages(10,message_id2_gen,chat_id2_gen,user_id_gen)

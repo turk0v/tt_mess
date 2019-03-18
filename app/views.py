@@ -16,10 +16,6 @@ import json
 #   return response
 
 
-@jsonrpc.method('get_chats_request')
-def get_chats_request(user_id):
-    return jsonify('hi').json
-
 
 
 # /search_users/
