@@ -21,6 +21,9 @@
 ### 2 задание
 
 1. Утилита для сравнения двух json-объектов
+* Сначала делаю предварительную сортировку, а затем уже сравниваю
+* Функция `equals_json` лежит в `app\utils\json_comparer.py`
+* Тест лежит в `python tests\general_tests\json_comparer_test.py`
 2. Selenium тест
 * Тест лежит по адресу `test\general_tests\selenium_test.py`
 * Запускать по команде `python tests\general_tests\selenium_test.py`
