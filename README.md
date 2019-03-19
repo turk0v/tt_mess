@@ -22,5 +22,7 @@
 
 1. Утилита для сравнения двух json-объектов
 2. Selenium тест
+* Тест лежит по адресу `test\general_tests\selenium_test.py`
+* Запускать по команде `python -m unittest tests/general_tests/selenium_test.py`
 3. Тест с mock-объектом
 4. Степень покрытия тестами с помощью coverage
