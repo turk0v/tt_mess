@@ -3,6 +3,11 @@ import flask
 import json
 from __init__ import jsonrpc
 from __init__ import app
+from werkzeug.contrib.cache import MemcachedCache
+import sys
+
+
+cache = MemcachedCache(['127.0.0.1:11211'])
 
 # app = flask.Flask(__name__)
 
@@ -26,20 +31,35 @@ def not_found(error):
 def not_found(error):
     return (flask.jsonify({'error': 'Wrong method'}), 405)
 
+    def get_my_item(): 
+    	rv = cache.get('my-item') 
+    	if rv is None: 
+    		rv = calculate_value() 
+    		cache.set('my-item', rv, timeout=5 * 60) 
+    	return rv
+
 @jsonrpc.method('get_chats')
 def get_chats(user_id):
-	return flask.jsonify(query_all("""
-	SELECT * FROM "Chat"
-	WHERE "user_id" = {};
-	""".format(user_id)))
+	chats = cache.get('user_chats_{}'.format(user_id))
+	if chats is None:
+		chats = (query_all("""
+				SELECT * FROM "Chat"
+				WHERE "user_id" = {};
+				""".format(user_id)))
+		cache.set('user_chats_{}'.format(user_id),chats,timeout=10*60)
+		print("put in cache:",chats,file=sys.stdout)
+		return (flask.jsonify(chats))
+	else:
+		print("taken from cache:",chats,file=sys.stdout)
+		return (flask.jsonify(chats))
 
 @jsonrpc.method('get_messages')
 def get_messages(chat_id):
-	return query_all("""
-	SELECT * FROM "Messages"
+	return json.dumps(query_all("""
+	SELECT * FROM "Message"
 	WHERE "chat_id" = %(chat_id)s;
 	""",
-	chat_id = int(chat_id))
+	chat_id = int(chat_id)),indent=4, sort_keys=True, default=str)
 
 @jsonrpc.method('add_new_chat')
 def add_new_chat(chat_id,is_group_chat,last_message,name,unread,key,avatar,user_id):
@@ -54,6 +74,7 @@ def add_new_chat(chat_id,is_group_chat,last_message,name,unread,key,avatar,user_
 	key = int(key),
 	avatar=(avatar),
 	user_id = int(user_id))
+	cache.delete('user_chats_{}'.format(chat_id))
 	commit()
 
 @jsonrpc.method('add_new_user')
@@ -80,3 +101,8 @@ def add_new_message(message_id,chat_id,user_id,content,sent):
 	content=(content),
 	sent = (sent)),
 	commit()
+
+
+
+
+
