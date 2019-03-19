@@ -5,3 +5,4 @@ instance/config.py
 *.pyc
 *.swo
 *.swp
+*.coverage
