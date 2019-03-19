@@ -17,6 +17,13 @@ def get_user_by_nick(nick):
     WHERE "nick" LIKE %(nick)s;
         """, nick = str(nick))
 
+def get_participants_of_chat(chat_id):
+	return query_all("""
+		SELECT "Chat".chat_id,"Chat".name AS "person1","User".name AS "person2" 
+		FROM "Chat","User"
+		WHERE "chat_id" = {} 
+		AND "Chat".user_id = "User".user_id""".format(chat_id))
+
 def get_user_by_name(name):
 	return query_all("""
     SELECT * FROM "User"
