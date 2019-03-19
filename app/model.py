@@ -31,13 +31,6 @@ def not_found(error):
 def not_found(error):
     return (flask.jsonify({'error': 'Wrong method'}), 405)
 
-    def get_my_item(): 
-    	rv = cache.get('my-item') 
-    	if rv is None: 
-    		rv = calculate_value() 
-    		cache.set('my-item', rv, timeout=5 * 60) 
-    	return rv
-
 @jsonrpc.method('get_chats')
 def get_chats(user_id):
 	chats = cache.get('user_chats_{}'.format(user_id))
@@ -60,6 +53,12 @@ def get_messages(chat_id):
 	WHERE "chat_id" = %(chat_id)s;
 	""",
 	chat_id = int(chat_id)),indent=4, sort_keys=True, default=str)
+
+@jsonrpc.method('get_users')
+def get_users():
+	return json.dumps(query_all("""
+	SELECT * FROM "User"
+	"""),indent=4, sort_keys=True, default=str)
 
 @jsonrpc.method('add_new_chat')
 def add_new_chat(chat_id,is_group_chat,last_message,name,unread,key,avatar,user_id):
