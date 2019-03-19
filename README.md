@@ -32,3 +32,5 @@
 * Mock на запрос `get_participants_of_chat`
 * Запускать по команде `python tests\general_tests\mock_test.py`
 4. Степень покрытия тестами с помощью coverage
+* Результат в форматах .txt и .html лежит в `coverage`
+* Суммарный результат покрытия тестами `51%`
