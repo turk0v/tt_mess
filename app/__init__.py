@@ -3,16 +3,25 @@ import sys
 from flask_jsonrpc import JSONRPC
 sys.path.insert(0, '/Users/matveyturkov/tt_mess/instance/')
 sys.path.insert(0, '/Users/matveyturkov/tt_mess/app/')
-from config import DevelopmentConfig,ProductionConfig
+import config
 from flask_cors import CORS
+import datetime
 # from werkzeug.contrib.profiler import ProfilerMiddleware
-#!flask/bin/python
+
+from flask_sqlalchemy import SQLAlchemy
+
 
 
 app = Flask(__name__)
-app.config.from_object(ProductionConfig)
+app.config.from_object(config.ProductionConfig)
 CORS(app)
 jsonrpc = JSONRPC(app,'/api')
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{username}:{password}@{url}:{port}/{db_name}'\
+    .format(username=config.DB_USER, password=config.DB_PASS, url=config.DB_HOST,
+            port=config.DB_PORT, db_name=config.DB_NAME)
+
+db = SQLAlchemy(app)
 # app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[30])
 @app.route('/')
 def index():
