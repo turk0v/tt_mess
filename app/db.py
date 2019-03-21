@@ -1,6 +1,14 @@
 import flask
 import psycopg2
 import psycopg2.extras
+from __init__ import db
+
+def add_value(obj):
+	db.session.add(obj)
+
+def commit_value():
+	db.session.commit()
+
 
 def get_connection():
 	if not hasattr(flask.g,'dbconn'):
