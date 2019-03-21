@@ -2,9 +2,10 @@ from db import *
 import flask
 import json
 from __init__ import jsonrpc
-from __init__ import app
+from __init__ import app,db
 from werkzeug.contrib.cache import MemcachedCache
 import sys
+from db_struct import *
 
 
 cache = MemcachedCache(['127.0.0.1:11211'])
@@ -68,45 +69,25 @@ def get_users():
 	"""),indent=4, sort_keys=True, default=str)
 
 @jsonrpc.method('add_new_chat')
-def add_new_chat(chat_id,is_group_chat,last_message,name,unread,key,avatar,user_id):
-	execute("""
-	INSERT INTO "Chat" VALUES(%(chat_id)s, %(is_group_chat)s, %(last_message)s,%(name)s, %(unread)s,%(key)s,%(avatar)s,%(user_id)s);
-	""",
-	chat_id = int(chat_id),
-	is_group_chat = 'true' if is_group_chat else 'false',
-	name = (name),
-	last_message = int(last_message),
-	unread = int(unread),
-	key = int(key),
-	avatar=(avatar),
-	user_id = int(user_id))
-	cache.delete('user_chats_{}'.format(chat_id))
-	commit()
+def add_new_chat(is_group_chat,name,unread,key,avatar,user_id):
+	add_value(Chat(is_group_chat=is_group_chat,name = name,unread = unread,key = key,avatar= avatar,user_id = user_id))
+	commit_value()
 
 @jsonrpc.method('add_new_user')
-def add_new_user(user_id,name,nick,avatar):
-	execute("""
-	INSERT INTO "User" VALUES(%(user_id)s, %(name)s, %(nick)s, %(avatar)s);
-	""",
-	user_id = int(user_id),
-	name = (name),
-	nick = (nick),
-	avatar=(avatar))
-	commit()
+def add_new_user(name,nick,avatar):
+	add_value(User(name=name,nick=nick,avatar=avatar))
+	commit_value()
 
-# curl -X POST --data '{"jsonrpc": "2.0", "method": "get_chats", "params": [676], "id": 0}' https://localhost:5000/api
 
 @jsonrpc.method('add_new_message')
-def add_new_message(message_id,chat_id,user_id,content,sent):
-	execute("""
-	INSERT INTO "Message" VALUES(%(message_id)s, %(chat_id)s, %(user_id)s, %(content)s, %(sent)s);
-	""",
-	message_id = int(message_id),
-	chat_id = int(chat_id),
-	user_id = int(user_id),
-	content=(content),
-	sent = (sent)),
-	commit()
+def add_new_message(content,sent,chat_id):
+	add_value(content=content,sent=sent,chat_id=chat_id)
+	commit_value()
+
+@jsonrpc.method('add_new_attach')
+def add_new_attach(type,size,chat_id):
+	add_value(type=type,size=size,chat_id=chat_id)
+	commit_value()
 
 
 

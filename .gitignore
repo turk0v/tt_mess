@@ -6,3 +6,4 @@ instance/config.py
 *.swo
 *.swp
 *.coverage
+*_tmp.py
