@@ -47,6 +47,8 @@
 * Добавил `Migrate` и `Manager` в `__init__`
 * Используя команды `python run.py db init` и `python run.py db migrate` сгенерировал папку `\migrate`
 3. Методы, пишущие в БД, через ORM
+* Добавил в `app\db.py` методы-обертки для ORM модели
+* Переписал через ORM `add_new_chat`,`add_new_user`,`add_new_message`,`add_new_attach` в файле `app\model.py`
 
 
 ### 4 задание 
