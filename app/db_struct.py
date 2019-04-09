@@ -63,11 +63,11 @@ class Message(db.Model):
 	id = db.Column('id',db.Integer,primary_key = True)
 	content = db.Column("content",db.String(500),nullable = False)
 	sent = db.Column("sent",db.DateTime,nullable = False,default = datetime.datetime.now)
-	mess_chat_id = db.Column('chat_id',db.Integer, db.ForeignKey('Chat.id'))
+	chat_id = db.Column('chat_id',db.Integer, db.ForeignKey('Chat.id'))
 	# chat_message = db.relationship('Chat', backref = 'message_chat')
 
 	def __repr__(self):
-		return f"Message('{self.content}','{self.sent}','{self.mess_chat_id}')"
+		return f"Message('{self.content}','{self.sent}','{self.chat_id}')"
 	def as_dict(self):
 		return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
 	def get_id(self):

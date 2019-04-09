@@ -40,26 +40,18 @@ def not_found(error):
 
 @jsonrpc.method('get_chats')
 def get_chats(user_id):
-	chats = cache.get('user_chats_{}'.format(user_id))
-	if chats is None:
-		chats = (query_all("""
-				SELECT * FROM "Chat"
-				WHERE "user_id" = {};
-				""".format(user_id)))
-		cache.set('user_chats_{}'.format(user_id),chats,timeout=10*60)
-		print("put in cache:",chats,file=sys.stdout)
-		return (flask.jsonify(chats))
-	else:
-		print("taken from cache:",chats,file=sys.stdout)
-		return (flask.jsonify(chats))
+	chats = []
+	for chat in (Chat.query.filter_by(user_id = user_id)):
+		chats.append(chat.as_dict())
+	return(chats)
+
 
 @jsonrpc.method('get_messages')
 def get_messages(chat_id):
-	return json.dumps(query_all("""
-	SELECT * FROM "Message"
-	WHERE "chat_id" = %(chat_id)s;
-	""",
-	chat_id = int(chat_id)),indent=4, sort_keys=True, default=str)
+	response = []
+	for message in (Message.query.filter_by(chat_id = chat_id)):
+		response.append(message.as_dict())
+	return response
 
 
 @jsonrpc.method('get_users')
