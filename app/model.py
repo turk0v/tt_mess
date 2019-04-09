@@ -1,4 +1,3 @@
-from db import *
 import flask
 import json
 from __init__ import jsonrpc
@@ -6,8 +5,8 @@ from __init__ import app,db
 from werkzeug.contrib.cache import MemcachedCache
 import sys
 from db_struct import *
-
-
+import db_methods
+from pathlib import Path
 cache = MemcachedCache(['127.0.0.1:11211'])
 
 # app = flask.Flask(__name__)
@@ -62,32 +61,39 @@ def get_messages(chat_id):
 	""",
 	chat_id = int(chat_id)),indent=4, sort_keys=True, default=str)
 
+
 @jsonrpc.method('get_users')
 def get_users():
-	return json.dumps(query_all("""
-	SELECT * FROM "User"
-	"""),indent=4, sort_keys=True, default=str)
+	response =  []
+	for user in (User.query.all()):
+		response.append(user.as_dict())
+	return response
+
+
+
 
 @jsonrpc.method('add_new_chat')
 def add_new_chat(is_group_chat,name,unread,key,avatar,user_id):
-	add_value(Chat(is_group_chat=is_group_chat,name = name,unread = unread,key = key,avatar= avatar,user_id = user_id))
-	commit_value()
+	db_methods.add_value(Chat(is_group_chat=is_group_chat,name = name,unread = unread,key = key,avatar= avatar,user_id = user_id))
+	db_methods.commit_value()
 
 @jsonrpc.method('add_new_user')
 def add_new_user(name,nick,avatar):
-	add_value(User(name=name,nick=nick,avatar=avatar))
-	commit_value()
+	user_tmp = User(name=name,nick=nick,avatar=avatar)
+	db_methods.add_value(user_tmp)
+	db_methods.commit_value()
 
 
 @jsonrpc.method('add_new_message')
 def add_new_message(content,sent,chat_id):
-	add_value(content=content,sent=sent,chat_id=chat_id)
-	commit_value()
+	message_tmp = Message(content=content,sent=sent,mess_chat_id=chat_id)
+	db_methods.add_value(message_tmp)
+	db_methods.commit_value()
 
 @jsonrpc.method('add_new_attach')
 def add_new_attach(type,size,chat_id):
-	add_value(type=type,size=size,chat_id=chat_id)
-	commit_value()
+	db_methods.add_value(Attachment(type=type,size=size,chat_id=chat_id))
+	db_methods.commit_value()
 
 
 

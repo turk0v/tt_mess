@@ -2,9 +2,10 @@ from flask_migrate import Migrate,MigrateCommand
 from flask_script import Manager
 from __init__ import db,app
 from db_struct import Chat,User,Message,Attachment
-from db import add_value,commit_value
-from model import add_new_user
+from db_methods import add_value,commit_value
+from model import get_users,add_new_user
 add_new_user(name="name3",nick="nick5",avatar=None)
+# print(get_users())
 # chat1 = Chat(is_group_chat = True,name = "name1",unread = 2,key = 66,avatar= None,user_id = 1)
 # add_value(chat1)
 # db.session.add(chat1)

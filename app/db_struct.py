@@ -12,9 +12,11 @@ class Attachment(db.Model):
 	# chat_attachment = db.relationship('Chat', back_populates = 'attachment_chat')
 
 	def __repr__(self):
-		return f"Chat('{self.is_group_chat}','{self.name}','{self.unread}','{self.key}','{self.avatar}')"
+		return f"Attachment('{self.a_type}','{self.size}','{self.attach_chat_id}')"
 	def as_dict(self):
 		return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+	def get_id(self):
+		return self.id
 
 
 class Chat(db.Model):
@@ -35,6 +37,8 @@ class Chat(db.Model):
 		return f"Chat('{self.is_group_chat}','{self.name}','{self.unread}','{self.key}','{self.avatar}')"
 	def as_dict(self):
 		return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+	def get_id(self):
+		return self.id
 
 
 class User(db.Model):
@@ -46,9 +50,11 @@ class User(db.Model):
 	# chat_user = db.relationship('Chat', back_populates = 'user_chat')
 
 	def __repr__(self):
-		return f"User('{self.name}','{self.nick}','{self.avatar}','{self.chat_id}')"
+		return f"User('{self.name}','{self.nick}','{self.avatar}')"
 	def as_dict(self):
 		return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+	def get_id(self):
+		return self.id
 
 
 
@@ -61,6 +67,8 @@ class Message(db.Model):
 	# chat_message = db.relationship('Chat', backref = 'message_chat')
 
 	def __repr__(self):
-		return f"Chat('{self.is_group_chat}','{self.name}','{self.unread}','{self.key}','{self.avatar}')"
+		return f"Message('{self.content}','{self.sent}','{self.mess_chat_id}')"
 	def as_dict(self):
 		return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+	def get_id(self):
+		return self.id
