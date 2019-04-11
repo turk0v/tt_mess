@@ -2,6 +2,9 @@ import flask
 import psycopg2
 import psycopg2.extras
 from __init__ import db
+import sys
+sys.path.insert(0, '/Users/matveyturkov/tt_mess/app/')
+from db_struct import Chat, User
 
 def add_value(obj):
 	db.session.add(obj)
@@ -11,6 +14,12 @@ def delete_value(obj):
 
 def commit_value():
 	db.session.commit()
+
+def get_email(user_id):
+	return User.query.filter_by(id = user_id).first().email
+
+def get_name(user_id):
+	return User.query.filter_by(id = user_id).first().name
 
 
 def get_connection():

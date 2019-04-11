@@ -6,7 +6,6 @@ sys.path.insert(0, '/Users/matveyturkov/tt_mess/app/')
 import config
 from flask_cors import CORS
 import datetime
-# from werkzeug.contrib.profiler import ProfilerMiddleware
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate,MigrateCommand
 from flask_script import Manager
@@ -25,11 +24,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{username}:{password}@{url
             port=config.DB_PORT, db_name=config.DB_NAME)
 
 
-
+db = SQLAlchemy(app)
 app.config.update(
 	broker_url='redis://localhost:6379',
 	result_backend='redis://localhost:6379',
-	include=['app.celery_tasks']
+	include=['celery_tasks']
 	)
 app.config.update(
 	MAIL_SERVER = 'smtp.googlemail.com',
@@ -45,8 +44,6 @@ celery = make_celery(app)
 mail = Mail(app)
 
 
-
-db = SQLAlchemy(app)
 migrate = Migrate(app,db)
 manager = Manager(app)
 manager.add_command('db',MigrateCommand)

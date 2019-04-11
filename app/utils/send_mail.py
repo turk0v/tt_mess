@@ -12,7 +12,7 @@ def send_mail(sender,recipients,theme,body,html):
 	message_to_send.html = html
 
 	with app.app_context():
-		mail.connection.send(message_to_send)
+		mail.send(message_to_send)
 
 
 

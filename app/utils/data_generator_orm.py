@@ -2,7 +2,6 @@ import sys
 sys.path.insert(0, '/Users/matveyturkov/tt_mess/app/')
 from db_methods import *
 from model import add_new_user,add_new_message,add_new_chat
-import postgresql
 import pandas as pd
 from random import randint,choice
 import flask
@@ -55,7 +54,7 @@ with app.app_context():
 		chat_id2_gen = randint(7510,10000)
 		message_id1_gen = randint(10010,25000)
 		message_id2_gen = randint(25010,50000)
-		add_new_user(user,users_nick[user],None)
+		add_new_user(user,users_nick[user],None,f'example{chat_id2_gen}@gmail.com')
 		print("added user with name {}".format(user))
 		tmp = rand_person(users_nick,user)
 		adding_user = str(choice(tmp))

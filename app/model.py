@@ -7,8 +7,8 @@ import sys
 from db_struct import *
 import db_methods
 from pathlib import Path
-
-# app = flask.Flask(__name__)
+import sys
+from celery_tasks import send_mail_on_chat
 
 def validate_user(user):
 	return UserForm(None, user).validate()
@@ -70,10 +70,15 @@ def get_users():
 def add_new_chat(is_group_chat,name,unread,key,avatar,user_id):
 	db_methods.add_value(Chat(is_group_chat=is_group_chat,name = name,unread = unread,key = key,avatar= avatar,user_id = user_id))
 	db_methods.commit_value()
+	email = db_methods.get_email(user_id)
+	name_chat_got = db_methods.get_name(user_id)
+	print(f"sending email to {email} and {name_chat_got}")
+	send_mail_on_chat.delay(name_chat_got,name,email)
+
 
 @jsonrpc.method('add_new_user')
-def add_new_user(name,nick,avatar):
-	db_methods.add_value(User(name=name,nick=nick,avatar=avatar))
+def add_new_user(name,nick,avatar,email):
+	db_methods.add_value(User(name=name,nick=nick,avatar=avatar,email = email))
 	db_methods.commit_value()
 
 
