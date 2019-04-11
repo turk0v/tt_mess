@@ -10,6 +10,8 @@ import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate,MigrateCommand
 from flask_script import Manager
+from celery_setup import make_celery
+from celery_tasks import *
 
 
 app = Flask(__name__)
@@ -20,6 +22,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{username}:{password}@{url}:{port}/{db_name}'\
     .format(username=config.DB_USER, password=config.DB_PASS, url=config.DB_HOST,
             port=config.DB_PORT, db_name=config.DB_NAME)
+
+
+
+app.config.update(
+	broker_url='redis://localhost:6379',
+	result_backend='redis://localhost:6379'
+	)
+
+celery = make_celery(app)
+
+
+
 
 db = SQLAlchemy(app)
 migrate = Migrate(app,db)
