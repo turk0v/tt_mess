@@ -11,7 +11,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate,MigrateCommand
 from flask_script import Manager
 from celery_setup import make_celery
-from celery_tasks import *
+from flask_mail import Mail
+
 
 
 app = Flask(__name__)
@@ -27,11 +28,21 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{username}:{password}@{url
 
 app.config.update(
 	broker_url='redis://localhost:6379',
-	result_backend='redis://localhost:6379'
+	result_backend='redis://localhost:6379',
+	include=['app.celery_tasks']
+	)
+app.config.update(
+	MAIL_SERVER = 'smtp.googlemail.com',
+	MAIL_PORT = 465,
+	MAIL_USERNAME = config.MAIL_USERNAME,
+	MAIL_PASSWORD = config.MAIL_PASSWORD,
+	MAIL_USE_SSL = True,
+	MAIL_USE_TLS = False,
+	ADMINS = ['bigmat1999@gmail.com']
 	)
 
 celery = make_celery(app)
-
+mail = Mail(app)
 
 
 
