@@ -1,4 +1,4 @@
-tt_venv/
+venv/
 node_modules/
 __pycache__/
 instance/config.py

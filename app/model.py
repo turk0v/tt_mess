@@ -1,15 +1,17 @@
 import flask
+from forms import *
 import json
 from __init__ import jsonrpc
 from __init__ import app,db
-from werkzeug.contrib.cache import MemcachedCache
 import sys
 from db_struct import *
 import db_methods
 from pathlib import Path
-cache = MemcachedCache(['127.0.0.1:11211'])
 
 # app = flask.Flask(__name__)
+
+def validate_user(user):
+	return UserForm(None, user).validate()
 
 def get_user_by_nick(nick):
 	return query_all("""
@@ -71,15 +73,13 @@ def add_new_chat(is_group_chat,name,unread,key,avatar,user_id):
 
 @jsonrpc.method('add_new_user')
 def add_new_user(name,nick,avatar):
-	user_tmp = User(name=name,nick=nick,avatar=avatar)
-	db_methods.add_value(user_tmp)
+	db_methods.add_value(User(name=name,nick=nick,avatar=avatar))
 	db_methods.commit_value()
 
 
 @jsonrpc.method('add_new_message')
 def add_new_message(content,sent,chat_id):
-	message_tmp = Message(content=content,sent=sent,mess_chat_id=chat_id)
-	db_methods.add_value(message_tmp)
+	db_methods.add_value( Message(content=content,sent=sent,chat_id=chat_id))
 	db_methods.commit_value()
 
 @jsonrpc.method('add_new_attach')
@@ -88,6 +88,22 @@ def add_new_attach(type,size,chat_id):
 	db_methods.commit_value()
 
 
+@jsonrpc.method('remove_message')
+def remove_message(message_id):
+	db_methods.delete_value(Message.query.filter_by(id = message_id).first())
+	db_methods.commit_value()
 
+
+@jsonrpc.method('remove_all_messages')
+def remove_all_messages(chat_id):
+	for message in Message.query.filter_by(chat_id = chat_id):
+		db_methods.delete_value(message)
+		db_methods.commit_value()
+
+@jsonrpc.method('change_message_content')
+def change_message_content(message_id,content):
+	message_tmp = Message.query.filter_by(id = message_id).first()
+	message_tmp.content = str(content)
+	db_methods.commit_value()
 
 
