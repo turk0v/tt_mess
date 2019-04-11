@@ -54,8 +54,12 @@
 ### 4 задание 
 
 1. Получение данных из БД через ORM
+* Методы `get_messages`,`get_users` и `get_chats` теперь написаны через ORM
 2. Обновление и удаление данных из БД через ORM
+* Методы `remove_message`,`remove_all_messages` и `change_message_content` теперь написаны через ORM
 3. Форма для валидации значений
+* Форма для валидации значений User лежит в `app\forms.py`
+* Добавил тест `tests\model_tests\form_validate_test.py` для проверки работы валидатора
 4. Дополнительно:
 * Добавил скрипт `data_generator_orm.py` для генерации данных для ORM модели
 
