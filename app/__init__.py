@@ -43,6 +43,13 @@ app.config.update(
 celery = make_celery(app)
 mail = Mail(app)
 
+celery.conf.beat_schedule = {
+    "30secondsmail": {
+        "task": "celery_tasks.send_mail_periodic",
+        "schedule": 20.0
+    }
+}
+celery.conf.timezone = 'UTC'
 
 migrate = Migrate(app,db)
 manager = Manager(app)

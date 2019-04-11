@@ -72,7 +72,6 @@ def add_new_chat(is_group_chat,name,unread,key,avatar,user_id):
 	db_methods.commit_value()
 	email = db_methods.get_email(user_id)
 	name_chat_got = db_methods.get_name(user_id)
-	print(f"sending email to {email} and {name_chat_got}")
 	send_mail_on_chat.delay(name_chat_got,name,email)
 
 
