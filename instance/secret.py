@@ -8,3 +8,4 @@ MAIL_PASSWORD = 'messagesender'
 ADMINS = 'bigmat1999@gmail.com'
 
 DB_SERVER_HOST = "95.163.248.127"
+DB_SERVER_PASSWORD = "frkyRtqcVz"
