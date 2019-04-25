@@ -1,13 +1,12 @@
 from flask import Flask,jsonify
 import sys
 from flask_jsonrpc import JSONRPC
-sys.path.insert(0, '/Users/matveyturkov/tt_mess/app/')
-import config
+from app import config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate,MigrateCommand
 from flask_script import Manager
 
-from celery_setup import make_celery
+from app.celery_setup import make_celery
 from flask_mail import Mail
 
 

@@ -1,9 +1,9 @@
 from __init__ import celery
 import sys
-sys.path.insert(0, '/Users/matveyturkov/tt_mess/app/utils/')
+from app.utils import send_mail
 sys.path.insert(0, '/Users/matveyturkov/tt_mess/instance/')
 from send_mail import send_mail
-from config import MAIL_USERNAME
+from secret import MAIL_USERNAME
 from celery.decorators import periodic_task
 from datetime import timedelta
 @celery.task()

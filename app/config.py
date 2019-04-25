@@ -1,5 +1,7 @@
 import sys
-sys.path.insert(0, '/Users/matveyturkov/tt_mess/instance/')
+DEV_PATH = '/Users/matveyturkov/tt_mess/instance/'
+PROD_PATH = '/home/ubuntu/tt_mess/instance'
+sys.path.insert(0, DEV_PATH)
 from secret import DB_USER,DB_PASS,DB_HOST,DB_PORT,DB_NAME,DB_SERVER_HOST,DB_SERVER_PASSWORD,MAIL_USERNAME as mail_user,MAIL_PASSWORD as mail_pass
 from flask import Config
 import datetime
