@@ -17,6 +17,9 @@ def not_found(error):
 def not_found(error):
     return (flask.jsonify({'error': 'Wrong method'}), 405)
 
+@app.route("/")
+def hello():
+	return "<h1 style='color:blue'>Hello There!</h1>"
 
 @app.route('/get_users/',methods=['GET'])
 def get_users():
@@ -69,8 +72,10 @@ def add_new_user(name,nick,avatar,email):
 
 @jsonrpc.method('add_new_message')
 def add_new_message(content,sent,chat_id):
-	add_value( Message(content=content,sent=sent,chat_id=chat_id))
+	message = Message(content=content,sent=sent,chat_id=chat_id)
+	add_value( message )
 	commit_value()
+	return (message.id)
 
 @jsonrpc.method('add_new_attach')
 def add_new_attach(type,size,chat_id):
@@ -82,6 +87,7 @@ def add_new_attach(type,size,chat_id):
 def remove_message(message_id):
 	delete_value(Message.query.filter_by(id = message_id).first())
 	commit_value()
+	return(True)
 
 
 @jsonrpc.method('remove_all_messages')

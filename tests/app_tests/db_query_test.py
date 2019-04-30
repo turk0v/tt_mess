@@ -2,7 +2,7 @@ import unittest
 import sys
 import requests
 sys.path.insert(0,'/Users/matveyturkov/tt_mess')
-from app import get_chats,app,validate_user,User
+from app import get_chats,app,validate_user,User,add_new_message,get_message,remove_message
 
 
 class DbQueryTest(unittest.TestCase):
@@ -28,6 +28,23 @@ class DbQueryTest(unittest.TestCase):
 	def test_validator(self):
 		short_nick = User(name='u', nick='u1', avatar='', email = '@.com')
 		self.assertFalse(validate_user(short_nick))
+
+	def test_index_page(self):
+		url = 'https://turkovmatvei.chickenkiller.com/'
+		res = requests.get(url)
+		self.assertTrue(res.text,'<h1 style=\'color:blue\'>Hello There!</h1>')
+
+	def test_add_and_delete_message(self):
+		message = {"content": "test_message","sent":"2019-04-15 01:46:07","chat_id":1}
+		with app.app_context():
+			mess_id = add_new_message(message["content"],message['sent'],message["chat_id"])
+			res = get_message(mess_id)
+			self.assertTrue(message,res)
+			res = remove_message(mess_id)
+			self.assertTrue(res,True)
+
+
+
 
 
 if __name__ == "__main__":
