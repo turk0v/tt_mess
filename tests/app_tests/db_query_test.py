@@ -1,7 +1,8 @@
 import unittest
 import sys
 import requests
-sys.path.insert(0,'/Users/matveyturkov/tt_mess')
+DEV_PATH = '/Users/matveyturkov/tt_mess'
+sys.path.insert(0,DEV_PATH)
 from app import get_chats,app,validate_user,User,add_new_message,get_message,remove_message
 
 

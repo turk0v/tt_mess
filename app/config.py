@@ -23,6 +23,7 @@ class DevelopmentConfig(Config):
 	MAIL_USE_SSL = True
 	MAIL_USE_TLS = False
 	ADMINS = ['bigmat1999@gmail.com']
+	PATH_MAIN = '/Users/matveyturkov/tt_mess/'
 
 class ProductionConfig(Config):
 	ENV = 'production'
@@ -40,6 +41,7 @@ class ProductionConfig(Config):
 	MAIL_USE_SSL = True
 	MAIL_USE_TLS = False
 	ADMINS = ['bigmat1999@gmail.com']
+	PATH_MAIN = '/home/ubuntu/tt_mess/'
 
 
 

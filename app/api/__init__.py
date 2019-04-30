@@ -53,6 +53,12 @@ def get_message(message_id):
 		response.append(message.as_dict())
 	return flask.jsonify(response)
 
+@app.route('/get_user/<user_id>',methods=['GET'])
+def get_user(user_id):
+	response = []
+	for user in (User.query.filter_by(id = user_id)):
+		response.append(user.as_dict())
+	return flask.jsonify(response)
 
 
 @jsonrpc.method('add_new_chat')
@@ -66,8 +72,10 @@ def add_new_chat(is_group_chat,name,unread,key,avatar,user_id):
 
 @jsonrpc.method('add_new_user')
 def add_new_user(name,nick,avatar,email):
-	add_value(User(name=name,nick=nick,avatar=avatar,email = email))
+	user = User(name=name,nick=nick,avatar=avatar,email = email)
+	add_value(user)
 	commit_value()
+	return(user.id)
 
 
 @jsonrpc.method('add_new_message')
@@ -88,6 +96,14 @@ def remove_message(message_id):
 	delete_value(Message.query.filter_by(id = message_id).first())
 	commit_value()
 	return(True)
+
+
+@jsonrpc.method('remove_user')
+def remove_user(user_id):
+	delete_value(User.query.filter_by(id = user_id).first())
+	commit_value()
+	return(True)
+
 
 
 @jsonrpc.method('remove_all_messages')
