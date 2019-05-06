@@ -3,9 +3,8 @@ from flask_script import Manager
 from __init__ import db,app
 from db_struct import Chat,User,Message,Attachment
 from db_methods import add_value,commit_value
-from model import add_new_chat
-add_new_chat(False,"Todd",0,1234412421,None,6)
-# add_new_user(name="name3",nick="nick5",avatar=None)
+from model import add_new_chat,add_new_user
+add_new_chat(False,"Fred",0,122421,None,8)
 # print(get_messages(14))
 # change_message_content(28,"hello,i am updated")
 # with app.app_context():

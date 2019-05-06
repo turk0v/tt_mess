@@ -15,7 +15,7 @@ from flask_mail import Mail
 
 
 app = Flask(__name__)
-app.config.from_object(config.ProductionConfig)
+app.config.from_object(config.DevelopmentConfig)
 CORS(app)
 jsonrpc = JSONRPC(app,'/api')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
@@ -33,8 +33,8 @@ app.config.update(
 app.config.update(
 	MAIL_SERVER = 'smtp.googlemail.com',
 	MAIL_PORT = 465,
-	MAIL_USERNAME = config.MAIL_USERNAME,
-	MAIL_PASSWORD = config.MAIL_PASSWORD,
+	MAIL_USERNAME = app.config['MAIL_USERNAME'],
+	MAIL_PASSWORD = app.config['MAIL_PASSWORD'],
 	MAIL_USE_SSL = True,
 	MAIL_USE_TLS = False,
 	ADMINS = ['bigmat1999@gmail.com']
@@ -44,9 +44,9 @@ celery = make_celery(app)
 mail = Mail(app)
 
 celery.conf.beat_schedule = {
-    "30secondsmail": {
+    "5secondsmail": {
         "task": "celery_tasks.send_mail_periodic",
-        "schedule": 20.0
+        "schedule": 10.0,
     }
 }
 celery.conf.timezone = 'UTC'
