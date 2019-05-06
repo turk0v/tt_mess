@@ -2,7 +2,6 @@ import sys
 sys.path.insert(0, '/Users/matveyturkov/tt_mess/app/')
 from db_methods import *
 from model import add_new_user,add_new_message,add_new_chat
-import postgresql
 import pandas as pd
 from random import randint,choice
 import flask

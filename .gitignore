@@ -1,7 +1,7 @@
 venv/
 node_modules/
 __pycache__/
-instance/config.py
+instance/secret.py
 *.pyc
 *.swo
 *.swp

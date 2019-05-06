@@ -6,7 +6,7 @@ from db_methods import add_value,commit_value
 from model import get_users,add_new_user,get_messages,get_chats,remove_message,remove_all_messages,change_message_content
 # add_new_user(name="name3",nick="nick5",avatar=None)
 # print(get_messages(14))
-change_message_content(28,"hello,i am updated")
+# change_message_content(28,"hello,i am updated")
 # with app.app_context():
 # 	print(get_chats(44))
 # print(get_users())
