@@ -15,7 +15,7 @@ from flask_script import Manager
 
 
 app = Flask(__name__)
-app.config.from_object(config.ProductionConfig)
+app.config.from_object(config.DevelopmentConfig)
 CORS(app)
 jsonrpc = JSONRPC(app,'/api')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -33,5 +33,5 @@ def index():
     return "Hello, World!"
 
 from model import *
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(host='127.0.0.1', port= 5002)

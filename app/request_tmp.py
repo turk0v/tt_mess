@@ -4,13 +4,11 @@ from __init__ import db,app
 from db_struct import Chat,User,Message,Attachment
 from db import add_value,commit_value
 from model import add_new_user
-add_new_user(name="name3",nick="nick5",avatar=None)
-# chat1 = Chat(is_group_chat = True,name = "name1",unread = 2,key = 66,avatar= None,user_id = 1)
-# add_value(chat1)
-# db.session.add(chat1)
-# user1 = User(name="name2",nick="nick2",avatar=None,chat_id = 1)
-# db.session.add(user1)
-# db.session.commit()
+add_new_user(name="name3",nick="nick4",avatar=None)
+chat1 = Chat(is_group_chat = True,name = "name1",unread = 2,key = 66,avatar= None,user_id = 1)
+add_value(chat1)
+db.session.add(chat1)
+db.session.commit()
 # user2 = User(name="name3",nick="nick3",avatar=None)
 # add_value(user2)
 # commit_value()
