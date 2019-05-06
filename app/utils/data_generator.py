@@ -16,9 +16,9 @@ messages = ['hi','whats up','sup','how are you','fine','thnx','bye','ok','asap',
 
 def time_formater():
 	rand_time_add_hour = randint(1,2)
-	rand_time_add_minute = randint(1,2)
-	rand_time_add_second = randint(1,10)
-	rand_time_add_month = randint(1,5)
+	rand_time_add_minute = randint(0,1)
+	rand_time_add_second = randint(1,2)
+	rand_time_add_month = randint(1,2)
 	return ("{}-{}-{} {}:{}:{}".format(
 		pd.datetime.now().year,pd.datetime.now().month,pd.datetime.now().day+rand_time_add_month,
 		pd.datetime.now().hour + rand_time_add_hour,pd.datetime.now().minute+rand_time_add_minute ,pd.datetime.now().second+rand_time_add_second))
@@ -44,7 +44,7 @@ def add_messages(number_to_gen,last_message_id,chat_id,user_id) :
 	print("added last message with id {}".format(last_message_id))
 
 
-# with app.app_context():
+with app.app_context():
 	for user in users_nick :
 		user_id_gen = randint(100,5000)
 		chat_id1_gen = randint(5010,7500)
